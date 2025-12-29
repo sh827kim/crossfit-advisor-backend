@@ -10,7 +10,14 @@ import java.util.Arrays;
 @Slf4j
 public class HttpServletUtil {
     public static String getCookieValue(HttpServletRequest request, String cookieName) {
-        if (request.getCookies() == null) return null;
+
+
+
+        if (request.getCookies() == null) {
+            log.info("No cookies found in the request.");
+            return null;
+        }
+
 
         log.info("COOKIES: {}", Arrays.toString(request.getCookies()));
 
