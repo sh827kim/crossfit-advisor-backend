@@ -56,8 +56,12 @@ public class WebSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/login/**", "/oauth2/**", "/auth/**", "/auth-token/**").permitAll() // 인증 없이 접근 가능
-                        .anyRequest().authenticated() // 나머지는 로그인 필요 (와드 기록 등)
+                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/auth-token/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 // 3. OAuth2 로그인 설정
                 .oauth2Login(oauth2 -> oauth2

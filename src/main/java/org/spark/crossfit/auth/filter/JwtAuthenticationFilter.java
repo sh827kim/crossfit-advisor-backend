@@ -60,4 +60,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throw new UnauthorizedException("Invalid or expired JWT token");
         }
     }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        String path = request.getRequestURI();
+        // 필터를 타지 않게 할 경로들을 등록
+        return path.startsWith("/auth-token/") ||
+                path.startsWith("/login/") ||
+                path.startsWith("/oauth2/");
+    }
 }
