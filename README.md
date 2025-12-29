@@ -13,6 +13,7 @@
 
 ## 참조
 본 프로젝트의 Frontend 소스코드는 이 링크를 참조하세요!
+- [또와드 (Frontend)](https://github.com/sh827kim/crossfit-advisor-frontend)
 
 ## 의존성 업그레이드 계획
 본 프로젝트는 Spring AI의 Spring boot 버전 지원 정책으로 인해 Spring Boot 3.5.9 버전을 사용하고 있습니다. 

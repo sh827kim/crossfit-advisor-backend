@@ -39,3 +39,5 @@ out/
 ### config ###
 **/*-local.yaml
 
+pem
+test.html

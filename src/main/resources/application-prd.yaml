@@ -1,0 +1,42 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - profile
+              - email
+  ai:
+    openai:
+      api-key: ${OPENAI_API_KEY}
+  datasource:
+    url: ${DATABASE_URL}
+    driver-class-name: org.postgresql.Driver
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none # 직접 만든 SQL로 테이블을 생성했다면 validate 권장
+custom:
+    application:
+      default-login-success-url: ${FRONTEND_URL}/dashboard
+      default-login-failure-url: ${FRONTEND_URL}/login/error
+      default-logout-success-url: ${FRONTEND_URL}/login
+      origins:
+        - ${FRONTEND_URL}
+      jwt:
+        issuer: ${JWT_ISSUER}
+        audience: ${JWT_AUDIENCE}
+        key-id: ${JWT_KEY_ID}
+        access-token-ttl: 3600 # 60 minutes
+        refresh-token-ttl: 7 # 7 days
+        refresh-token-purpose: refresh
+        access-token-purpose: access
+        private-key: ${JWT_PRIVATE_KEY}
+        public-key: ${JWT_PUBLIC_KEY}
