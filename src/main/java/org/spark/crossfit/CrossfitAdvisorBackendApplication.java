@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @SpringBootApplication
 public class CrossfitAdvisorBackendApplication {
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         SpringApplication.run(CrossfitAdvisorBackendApplication.class, args);
     }
 
