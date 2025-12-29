@@ -3,3 +3,5 @@ spring:
     name: crossfit-advisor-backend
   profiles:
     active: local
+server:
+  forward-headers-strategy: framework
