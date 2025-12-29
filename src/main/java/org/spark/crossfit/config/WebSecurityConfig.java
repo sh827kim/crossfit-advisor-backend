@@ -147,7 +147,7 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(customApplicationConfig.getOrigins());
+        customApplicationConfig.getOrigins().forEach(configuration::addAllowedOrigin);
         configuration.addAllowedHeader("*"); //모든 Header 허용
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
