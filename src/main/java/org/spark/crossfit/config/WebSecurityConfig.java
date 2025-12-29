@@ -97,7 +97,7 @@ public class WebSecurityConfig {
                             ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, "")
                                     .httpOnly(true)
                                     .secure(true)
-                                    .sameSite("Lax")
+                                    .sameSite("None")
                                     .path("/")
                                     .maxAge(0)
                                     .build();
@@ -133,7 +133,7 @@ public class WebSecurityConfig {
             ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN_COOKIE_NAME, refresh)
                     .httpOnly(true)
                     .secure(true)               // Railway + HTTPS 기준
-                    .sameSite("Lax")           // 프론트/백 분리
+                    .sameSite("None")           // 프론트/백 분리
                     .path("/")
                     .maxAge(Duration.ofDays(customApplicationConfig.getJwt().getRefreshTokenTtl()).toSeconds())
                     .build();
