@@ -156,6 +156,8 @@ public class WebSecurityConfig {
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.addExposedHeader("Authorization"); // 클라이언트가 특정 헤더값에 접근 가능하도록 하기
+        configuration.addExposedHeader("Set-Cookie");
+        configuration.addExposedHeader("Location");
 
         configuration.setAllowCredentials(true); // 쿠키/세션 주고받기 위해 필수
 

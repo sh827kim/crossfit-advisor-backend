@@ -25,8 +25,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
-        attributes.forEach((key, value) -> log.info("{} : {}", key, value));
-
         String uid = attributes.get("sub") != null ? attributes.get("sub").toString() :
                 attributes.get("id") != null ? attributes.get("id").toString() :
                         null;

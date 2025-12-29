@@ -44,3 +44,9 @@ custom:
         access-token-purpose: access
         private-key: ${JWT_PRIVATE_KEY}
         public-key: ${JWT_PUBLIC_KEY}
+server:
+  servlet:
+    session:
+      cookie:
+        same-site: none
+        secure: true
