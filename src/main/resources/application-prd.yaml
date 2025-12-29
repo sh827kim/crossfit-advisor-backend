@@ -1,4 +1,7 @@
 spring:
+  config:
+    activate:
+      on-profile: prd
   security:
     oauth2:
       client:
