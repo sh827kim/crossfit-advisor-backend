@@ -22,12 +22,8 @@ public class CrossfitAdvisorService {
                 .nickname(member.getNickname())
                 .email(member.getEmail())
                 .unitType(member.getUnitType())
-                .preferences(
-                        MyInfo.Preferences.builder()
-                                .workoutMinutes(member.getWorkoutMinutes())
-                                .additionalInfo(member.getAdditionalInfo())
-                                .build()
-                )
+                .workoutMinutes(member.getWorkoutMinutes())
+                .additionalInfo(member.getAdditionalInfo())
                 .build();
     }
 

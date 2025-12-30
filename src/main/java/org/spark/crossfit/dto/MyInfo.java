@@ -12,16 +12,6 @@ public class MyInfo {
     private String email;
     private String nickname;
     private UnitType unitType;
-    private Preferences preferences;
-
-    @Getter
-    @Setter
-    @Builder
-    @ToString
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Preferences {
-        private Integer workoutMinutes;
-        private String additionalInfo;
-    }
+    private Integer workoutMinutes;
+    private String additionalInfo;
 }
