@@ -16,6 +16,7 @@ public class CustomApplicationConfig {
     private List<String> origins;
     private Jwt jwt;
     private CookieOptions cookieOptions;
+    private String googleApiKey;
 
     @Getter
     @Setter
@@ -39,4 +40,5 @@ public class CustomApplicationConfig {
         private String sameSite;
         private String domain;
     }
+
 }

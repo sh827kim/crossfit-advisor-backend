@@ -1,5 +1,9 @@
 package org.spark.crossfit.constants;
 
 public class CommonConstants {
-    public static final String REFRESH_TOKEN_COOKIE_NAME = "cf_refresh";
+    /** Vision API host */
+    public static final String GOOGLE_VISION_API_HOST = "vision.googleapis.com";
+
+    /** OCR annotate endpoint */
+    public static final String GOOGLE_VISION_API_PATH = "/v1/images:annotate";
 }

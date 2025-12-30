@@ -1,6 +1,7 @@
 package org.spark.crossfit.config;
 
 
+import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.spark.crossfit.auth.JwtTokenProvider;
 import org.spark.crossfit.auth.dto.AuthDetails;
@@ -50,6 +51,7 @@ public class WebSecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/oauth2/**").permitAll()

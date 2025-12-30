@@ -26,6 +26,7 @@ repositories {
 
 ext {
     set('springAiVersion', "1.1.2")
+    set("googleCloudVersion", "26.72.0")
 }
 
 dependencies {

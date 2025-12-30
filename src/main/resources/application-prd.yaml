@@ -2,6 +2,10 @@ spring:
   config:
     activate:
       on-profile: prd
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
   security:
     oauth2:
       client:
@@ -35,6 +39,7 @@ custom:
       default-login-success-url: ${FRONTEND_URL}/dashboard
       default-login-failure-url: ${FRONTEND_URL}/login/error
       default-logout-success-url: ${FRONTEND_URL}/login
+      google-api-key: ${GOOGLE_API_KEY}
       origins:
         - ${FRONTEND_URL}
       jwt:
