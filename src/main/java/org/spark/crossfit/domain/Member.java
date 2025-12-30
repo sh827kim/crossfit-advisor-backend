@@ -24,4 +24,20 @@ public class Member {
     private UnitType unitType;
     private Integer workoutMinutes;
     private String additionalInfo;
+
+    public void changeNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void changeUnitType(UnitType unitType) {
+        this.unitType = unitType;
+    }
+
+    public void changeWorkoutMinutes(Integer workoutMinutes) {
+        this.workoutMinutes = workoutMinutes;
+    }
+
+    public void changeAdditionalInfo(String additionalInfo) {
+        this.additionalInfo = additionalInfo;
+    }
 }

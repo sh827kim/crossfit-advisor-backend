@@ -26,6 +26,10 @@ public class MemberService {
         memberRepository.save(newMember);
     }
 
+    public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
+
     public Optional<Member> findByEmail(String email) {
         return memberRepository.findMemberByEmail(email);
     }
