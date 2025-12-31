@@ -1,10 +1,13 @@
 package org.spark.crossfit.config;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
 import org.spark.crossfit.auth.JwtTokenProvider;
 import org.spark.crossfit.auth.dto.AuthDetails;
+import org.spark.crossfit.auth.filter.RestAccessDeniedHandler;
+import org.spark.crossfit.auth.filter.RestAuthenticationEntryPoint;
 import org.spark.crossfit.auth.repository.RefreshTokenStore;
 import org.spark.crossfit.auth.filter.JwtAuthenticationFilter;
 import org.spark.crossfit.auth.service.CustomOAuth2UserService;
@@ -14,7 +17,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -35,13 +40,29 @@ public class WebSecurityConfig {
     private final RefreshTokenStore refreshTokenStore;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter(jwtTokenProvider);
+    public AuthenticationEntryPoint restAuthenticationEntryPoint(ObjectMapper objectMapper) {
+        return new RestAuthenticationEntryPoint(objectMapper);
+    }
+
+    @Bean
+    public AccessDeniedHandler restAccessDeniedHandler(ObjectMapper objectMapper) {
+        return new RestAccessDeniedHandler(objectMapper);
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(
+            AuthenticationEntryPoint restAuthenticationEntryPoint
+    ) {
+        return new JwtAuthenticationFilter(jwtTokenProvider, restAuthenticationEntryPoint);
     }
 
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http,
+                                           JwtAuthenticationFilter jwtAuthenticationFilter,
+                                           AuthenticationEntryPoint restAuthenticationEntryPoint,
+                                           AccessDeniedHandler restAccessDeniedHandler
+    ) throws Exception {
         http
                 // 1. 프론트(Next.js)와의 통신을 위한 CORS 설정
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
@@ -50,6 +71,10 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .exceptionHandling(e -> e
+                        .authenticationEntryPoint(restAuthenticationEntryPoint)
+                        .accessDeniedHandler(restAccessDeniedHandler)
+                )
                 .authorizeHttpRequests(auth -> auth
                         .dispatcherTypeMatchers(DispatcherType.ASYNC, DispatcherType.ERROR).permitAll()
                         .requestMatchers("/").permitAll()
@@ -70,7 +95,7 @@ public class WebSecurityConfig {
                             response.setHeader("Location", customApplicationConfig.getDefaultLoginFailureUrl());
                         })
                 )
-                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 // 4. 로그아웃 설정
                 .logout(logout -> logout
                         .logoutUrl("/auth/logout")
