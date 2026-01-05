@@ -135,6 +135,7 @@ openssl rsa -in private_key.pem -pubout -out public_key.pem # JWT_PUBLIC_KEY 에
 4. 프로젝트를 빌드 및 실행해주세요.
 ```shell
 ./gradlew bootJar
+java -jar build/libs/*.jar
 ```
 
 ## 소스코드 구조

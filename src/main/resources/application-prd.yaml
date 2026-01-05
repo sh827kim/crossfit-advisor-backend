@@ -28,6 +28,10 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
+    hikari:
+      maximum-pool-size: 5
+      minimum-idle: 0
+      idle-timeout: 300000
   jpa:
     properties:
       hibernate:
@@ -58,3 +62,8 @@ server:
       cookie:
         same-site: none
         secure: true
+  tomcat:
+    threads:
+      min-spare: 5
+      max: 50
+    accept-count: 50
