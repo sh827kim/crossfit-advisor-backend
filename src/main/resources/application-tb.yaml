@@ -55,7 +55,7 @@ custom:
         refresh-token-purpose: refresh
         access-token-purpose: access
         private-key: ${JWT_PRIVATE_KEY}
-        public-key:
+        public-key: ${JWT_PUBLIC_KEY}
       allowed-users: ${ALLOWED_USERS}
 server:
   servlet:
