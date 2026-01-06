@@ -17,6 +17,7 @@ public class CustomApplicationConfig {
     private Jwt jwt;
     private CookieOptions cookieOptions;
     private String googleApiKey;
+    private List<String> allowedUsers;
 
     @Getter
     @Setter

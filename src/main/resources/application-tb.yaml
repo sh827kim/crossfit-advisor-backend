@@ -1,7 +1,7 @@
 spring:
   config:
     activate:
-      on-profile: prd
+      on-profile: tb
   servlet:
     multipart:
       max-file-size: 20MB

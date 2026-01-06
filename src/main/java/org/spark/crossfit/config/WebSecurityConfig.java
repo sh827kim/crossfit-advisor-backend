@@ -27,6 +27,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 
@@ -34,6 +36,7 @@ import java.util.List;
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityConfig {
+
     private final CustomApplicationConfig customApplicationConfig;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -91,8 +94,15 @@ public class WebSecurityConfig {
                         )
                         .successHandler(oAuth2CookieRedirectSuccessHandler())
                         .failureHandler((request, response, exception) -> {
+                            String errorMessage = exception.getMessage();
+
+                            // URL 인코딩 (한글 깨짐 방지)
+                            String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
+
+                            String redirectUrl = customApplicationConfig.getDefaultLoginFailureUrl()
+                                    + "?error=true&message=" + encodedMessage;
                             response.setStatus(302);
-                            response.setHeader("Location", customApplicationConfig.getDefaultLoginFailureUrl());
+                            response.setHeader("Location", redirectUrl);
                         })
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
